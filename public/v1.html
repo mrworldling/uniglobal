@@ -1,0 +1,92 @@
+
+
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Professional Form</title>
+      <style>
+         body {
+         background: linear-gradient(to right, #ff9966, #ff5e62) fixed;
+         }
+         .form-container {
+         max-width: 500px;
+         margin: 0 auto;
+         text-align: center;
+         background-color: white;
+         padding: 20px;
+         border-radius: 10px;
+         }
+         input[type=text] {
+         padding: 12px 20px;
+         margin: 8px 0;
+         box-sizing: border-box;
+         border: 2px solid #ccc;
+         border-radius: 4px;
+         }
+         input[type=submit] {
+         background-color: #ff9966;
+         color: white;
+         padding: 12px 20px;
+         border: none;
+         border-radius: 4px;
+         cursor: pointer;
+         }
+         input[type=submit]:hover {
+         background-color: #ff5e62;
+         }
+         .result-container {
+         max-width: 500px;
+         margin: 20px auto;
+         text-align: center;
+         background-color: white;
+         padding: 10px;
+         border-radius: 10px;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="form-container">
+         <form id="my-form">
+            <label for="input-1">Job Applied For</label>
+            <br>
+            <input type="text" id="input-1" name="input-1" placeholder="Enter job applied for">
+            <br><br>
+            <label for="input-2">University</label>
+            <br>
+            <input type="text" id="input-2" name="input-2" placeholder="Enter university">
+            <br><br>
+            <label for="input-3">Your CV</label>
+            <br>
+            <input type="text" id="input-3" name="input-3" placeholder="Enter your CV link">
+            <br><br>
+            <label for="input-4">Job Description</label>
+            <br>
+            <input type="text" id="input-4" name="input-4" placeholder="Enter job description link">
+            <br><br>
+            <input type="submit" value="Submit">
+         </form>
+      </div>
+      <div class="result-container">
+         <p id="result"></p>
+      </div>
+      <script>
+         const myForm = document.querySelector('#my-form');
+         myForm.addEventListener('submit', async (e) => {
+             e.preventDefault();
+             const jobAppliedFor = document.querySelector('#input-1').value;
+             const university = document.querySelector('#input-2').value;
+             const cv = document.querySelector('#input-3').value;
+             const jobDescription = document.querySelector('#input-4').value;
+             const response = await fetch('/api/request', {
+                 method: 'POST',
+                 body: JSON.stringify({jobAppliedFor, university, cv, jobDescription}),
+                 headers: {
+                     'Content-type': 'application/json; charset=UTF-8'
+                 }
+             });
+             const data = await response.text();
+             document.querySelector('#result').innerText = data;
+         });
+      </script>
+   </body>
+</html>
